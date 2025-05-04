@@ -1,0 +1,143 @@
+
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تست شخصیت</title>
+  <style>
+    body {
+      font-family: Tahoma, sans-serif;
+      direction: rtl;
+      padding: 20px;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+    h1 {
+      text-align: center;
+      color: #6a1b9a;
+      font-size: 24px;
+      margin-bottom: 30px;
+    }
+    .question {
+      background-color: #fff;
+      padding: 15px;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+    .question p {
+      font-size: 18px;
+      font-weight: bold;
+      color: #2e7d32;
+    }
+    button {
+      display: block;
+      margin: 8px 0;
+      padding: 10px;
+      width: 100%;
+      border: none;
+      border-radius: 8px;
+      background-color: #ff7043;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #f4511e;
+    }
+    #finish {
+      margin-top: 20px;
+      background-color: #1976d2;
+    }
+    .result {
+      margin-top: 30px;
+      font-size: 20px;
+      font-weight: bold;
+      color: #4a148c;
+      background-color: #e1bee7;
+      padding: 20px;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>تست شخصیت ساخته شده توسط صبغت عرب‌زاده</h1>
+  <div id="quiz"></div>
+  <button onclick="showResult()" id="finish" style="display:none;">نمایش نتیجه</button>
+  <div class="result" id="result"></div>
+
+  <script>
+    const questions = [
+      {
+        text: "در موقعیت سخت، چه کار می‌کنی؟",
+        options: ["صبر می‌کنم", "فرار می‌کنم", "تحلیل می‌کنم", "احساساتی می‌شوم"]
+      },
+      {
+        text: "چطور استراحت می‌کنی؟",
+        options: ["موزیک", "کتاب", "پیاده‌روی", "فیلم"]
+      },
+      {
+        text: "با آدم‌ها چطور ارتباط می‌گیری؟",
+        options: ["راحت", "سخت", "فقط با نزدیکان", "خیلی اجتماعی"]
+      },
+      {
+        text: "کدام جمله بهت نزدیک‌تره؟",
+        options: ["هر مشکلی راهی داره", "من همیشه نگرانم", "فقط امروز مهمه", "تغییر لازمه"]
+      },
+      {
+        text: "وقتی موفق می‌شی، چی حس می‌کنی؟",
+        options: ["افتخار", "تعجب", "شکرگزاری", "دنبال هدف بعدی"]
+      },
+      {
+        text: "چطور تصمیم می‌گیری؟",
+        options: ["مشورت", "احساس", "تحقیق", "بداهه"]
+      },
+      {
+        text: "آینده‌ات رو چطور می‌بینی؟",
+        options: ["روشن", "مبهم", "هیجان‌انگیز", "ساده"]
+      }
+    ];
+
+    let current = 0;
+    let score = 0;
+
+    function loadQuestion() {
+      const q = questions[current];
+      const container = document.getElementById("quiz");
+      container.innerHTML = `<div class="question"><p>${q.text}</p></div>`;
+      q.options.forEach((opt, i) => {
+        const btn = document.createElement("button");
+        btn.textContent = opt;
+        btn.onclick = () => {
+          score += i;
+          current++;
+          if (current < questions.length) {
+            loadQuestion();
+          } else {
+            document.getElementById("quiz").style.display = "none";
+            document.getElementById("finish").style.display = "block";
+          }
+        };
+        container.appendChild(btn);
+      });
+    }
+
+    function showResult() {
+      let message = "";
+      if (score < 10) {
+        message = "تو انسانی آرام، منطقی و درون‌گرا هستی. مسیر زندگی‌ات را با حوصله و تفکر طی می‌کنی.";
+      } else if (score < 15) {
+        message = "تو شخصی با تعادل فکری و احساسی هستی. در شرایط مختلف، بهترین نسخه‌ی خودت رو نشون می‌دی.";
+      } else {
+        message = "تو پرانرژی، باانگیزه و خلاق هستی! دنیا به آدم‌هایی مثل تو نیاز داره.";
+      }
+      document.getElementById("result").innerText = message;
+      document.getElementById("finish").style.display = "none";
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
